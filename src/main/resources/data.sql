@@ -1,0 +1,11 @@
+show databases;
+use cricketApp;
+show tables;
+select * from user;
+insert into user(id, first_name, last_name, email, state, phone, age, password) values(1,"deepak","gupta","deepak@gmail.com","delhi","9876543210",22,"deepak12");
+drop table user;
+delete from user where age=22;
+select * from admin;
+insert into admin(id,email,password) values(101,"admin@gmail.com","admin12");
+select * from team;
+drop table team;

@@ -27,7 +27,7 @@ public class CreateContest {
 		super();
 	}
 
-	public int getId() {
+	public int getId() {  
 		return id;
 	}
 
@@ -106,4 +106,4 @@ public class CreateContest {
 				+ rank3 + "]";
 	}
 	
-}
+}   

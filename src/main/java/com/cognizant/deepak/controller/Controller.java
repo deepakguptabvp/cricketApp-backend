@@ -1,6 +1,6 @@
 package com.cognizant.deepak.controller;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.deepak.entities.Admin;
 import com.cognizant.deepak.entities.CreateContest;
+import com.cognizant.deepak.entities.MapingContestFixture;
 import com.cognizant.deepak.entities.MatchFixing;
 import com.cognizant.deepak.entities.Player;
 import com.cognizant.deepak.entities.Team;
 import com.cognizant.deepak.entities.User;
 import com.cognizant.deepak.services.AdminService;
 import com.cognizant.deepak.services.CreateContestService;
+import com.cognizant.deepak.services.MapingContestFixtureService;
 import com.cognizant.deepak.services.MatchFixingService;
 import com.cognizant.deepak.services.PlayerService;
 import com.cognizant.deepak.services.TeamService;
@@ -48,9 +50,12 @@ public class Controller {
 
 	@Autowired
 	private MatchFixingService matchFixingService;
-	
+
 	@Autowired
 	private CreateContestService createContestService;
+	
+	@Autowired
+	private MapingContestFixtureService mapingContestFixtureService;
 
 	@PostMapping("/cricket-app/user/registration")
 	public ResponseEntity<User> addUser(@RequestBody @Validated User user) {
@@ -96,7 +101,7 @@ public class Controller {
 	@GetMapping("/cricket-app/player/fetchallplayer")
 	public ResponseEntity<List<Player>> allPlayers() {
 		return new ResponseEntity<List<Player>>(playerService.getAllPlayers(), HttpStatus.OK);
-	}    
+	}
 
 	@DeleteMapping("/cricket-app/player/delete/{playerId}")
 	public void deletePlayerById(@PathVariable @Validated int playerId) {
@@ -122,21 +127,22 @@ public class Controller {
 	public ResponseEntity<MatchFixing> addMatchFixture(@RequestBody @Validated MatchFixing matchFixing) {
 		return new ResponseEntity<>(matchFixingService.setMatchFixing(matchFixing), HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/cricket-app/matchfixing/fetchall-matchfixtures")
-	public ResponseEntity<List<MatchFixing>> fetchAllMatchFixtures(){
-		return new ResponseEntity<List<MatchFixing>>(matchFixingService.getAllMatchFixtures(),HttpStatus.OK);
+	public ResponseEntity<List<MatchFixing>> fetchAllMatchFixtures() {
+		return new ResponseEntity<List<MatchFixing>>(matchFixingService.getAllMatchFixtures(), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/cricket-app/matchfixing/delete-matchfixtures/{matchFixtureId}")
 	public void deleteMatchFixingById(@PathVariable @Validated int matchFixtureId) {
 		matchFixingService.deleteMatchFixing(matchFixtureId);
 	}
-	
+
 	@PutMapping("/cricket-app/matchfixing/update/{matchFixingId}")
-	public ResponseEntity<MatchFixing> updateMatchFixing(@RequestBody MatchFixing matchFixing, @PathVariable ("matchFixingId") int id){
+	public ResponseEntity<MatchFixing> updateMatchFixing(@RequestBody MatchFixing matchFixing,
+			@PathVariable("matchFixingId") int id) {
 		Optional<MatchFixing> optionalMatchFixing = matchFixingService.findById(id);
-		
+
 		if (!optionalMatchFixing.isPresent()) {
 			return ResponseEntity.notFound().build();
 		} else {
@@ -145,24 +151,54 @@ public class Controller {
 			return ResponseEntity.ok(matchFixing);
 		}
 	}
-	
+
 //-------------------------------Create Contest Api's----------------------------------------------------------------------------	
 
 	@PostMapping("/cricket-app/createcontest/add-createcontest")
-	public ResponseEntity<CreateContest> addContest(@RequestBody @Validated CreateContest createContest){
-		return new ResponseEntity<>(createContestService.setCreateContest(createContest),HttpStatus.CREATED);
+	public ResponseEntity<CreateContest> addContest(@RequestBody @Validated CreateContest createContest) {
+		return new ResponseEntity<>(createContestService.setCreateContest(createContest), HttpStatus.CREATED);
 	}
-	
-	@PutMapping("/cricket-app/createcontest/fetchall-createcontest")
-	public ResponseEntity<List<CreateContest>>fetchAllCreateContest(){
-		return new ResponseEntity<List<CreateContest>>(createContestService.getAllCreateContest(),HttpStatus.OK);
+
+	@GetMapping("/cricket-app/createcontest/fetchall-createcontest")
+	public ResponseEntity<List<CreateContest>> fetchAllCreateContest() {
+		return new ResponseEntity<List<CreateContest>>(createContestService.getAllCreateContest(), HttpStatus.OK);
 	}
-	
-	@DeleteMapping("cricket-app/createcontest/delete-createcontest/{createContestId}")
-		public void deleteCreateContestById(@PathVariable @Validated int createContestId ) {
+
+	@DeleteMapping("/cricket-app/createcontest/delete-createcontest/{createContestId}")
+	public void deleteCreateContestById(@PathVariable @Validated int createContestId) {
 		createContestService.deleteCreateContest(createContestId);
 	}
+
+	@PutMapping("/cricket-app/createcontest/update-createcontest/{createContestId}")
+	public ResponseEntity<CreateContest> updateCreateContest(@RequestBody CreateContest createContest,
+			@PathVariable("createContestId") int id) {
+		Optional<CreateContest> optionalCreateContest = createContestService.findById(id);
+
+		if (!optionalCreateContest.isPresent()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			createContest.setId(id);
+			createContest = createContestService.setCreateContest(createContest);
+			return ResponseEntity.ok(createContest);
+		}     
+	}    
+	
+	//-------------------------------Maping Contest Fixture Api's----------------------------------------------------------------------------	
+	
+	@PostMapping("/cricket-app/mapingcontestfixture/add-mapingcontestfixture")
+	public ResponseEntity<MapingContestFixture> addMapingContestFix(@RequestBody @Validated MapingContestFixture mapingContestFixture){
+		return new ResponseEntity<>(mapingContestFixtureService.setMapingContestFixture(mapingContestFixture),HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/cricket-app/mapingcontestfixture/fetchall-mapingcontestfixture")
+	public ResponseEntity<List<MapingContestFixture>> fetchAllMapingContestFixture() {
+		return new ResponseEntity<List<MapingContestFixture>>(mapingContestFixtureService.getAllMapingContestFixture(), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/cricket-app/mapingcontestfixture/delete-mapingcontestfixture/{mapingContestFixtureId}")
+	public void deleteMapingContestFixtureById(@PathVariable @Validated int mapingContestFixtureId) {
+		mapingContestFixtureService.deleteMapingContestFixture(mapingContestFixtureId);
+	}
 	
 	
-	
-}
+}    

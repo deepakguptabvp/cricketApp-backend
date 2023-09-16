@@ -25,7 +25,6 @@ public class MatchFixing {
 
 	public MatchFixing() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
        
 	public int getId() {

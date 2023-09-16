@@ -14,6 +14,7 @@ public class CreateContest {
 	@Id   
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String name;
 	private int prizeMoney;
 	private int entryFee;
@@ -21,7 +22,7 @@ public class CreateContest {
 	private int minSize;
 	private int rank1;
 	private int rank2;
-	private int rank3;
+	private int rank3;  
 	
 	public CreateContest() {
 		super();

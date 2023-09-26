@@ -2,6 +2,8 @@ package com.cognizant.deepak.controller;
 
 import java.util.List; 
 import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import com.cognizant.deepak.entities.MatchFixing;
 import com.cognizant.deepak.entities.Player;
 import com.cognizant.deepak.entities.Team;
 import com.cognizant.deepak.entities.User;
+import com.cognizant.deepak.gaminginfo.GameRules;
 import com.cognizant.deepak.services.AdminService;
 import com.cognizant.deepak.services.CreateContestService;
 import com.cognizant.deepak.services.MapingContestFixtureService;
@@ -56,6 +59,9 @@ public class Controller {
 	
 	@Autowired
 	private MapingContestFixtureService mapingContestFixtureService;
+	
+	@Autowired
+	private GameRules gameRules;
 
 	@PostMapping("/cricket-app/user/registration")
 	public ResponseEntity<User> addUser(@RequestBody @Validated User user) {
@@ -183,11 +189,11 @@ public class Controller {
 		}     
 	}    
 	
-	//-------------------------------Maping Contest Fixture Api's----------------------------------------------------------------------------	
+//-------------------------------Maping Contest Fixture Api's----------------------------------------------------------------------------	
 	
 	@PostMapping("/cricket-app/mapingcontestfixture/add-mapingcontestfixture")
-	public ResponseEntity<MapingContestFixture> addMapingContestFix(@RequestBody @Validated MapingContestFixture mapingContestFixture){
-		return new ResponseEntity<>(mapingContestFixtureService.setMapingContestFixture(mapingContestFixture),HttpStatus.CREATED);
+	public Object create(@RequestBody MapingContestFixture mapContestFixture) {
+		return mapingContestFixtureService.create(mapContestFixture);
 	}
 	
 	@GetMapping("/cricket-app/mapingcontestfixture/fetchall-mapingcontestfixture")
@@ -201,4 +207,20 @@ public class Controller {
 	}
 	
 	
+//-------------------------------Game Rules Api's----------------------------------------------------------------------------	
+
+	@GetMapping("/cricket-app/gamerules")
+	public ResponseEntity<Map<String, String>> getAppInfo(){
+		Map<String,String> appInfo = new HashMap<>();
+		appInfo.put("batting run points", gameRules.getBattingPointsRun());
+		appInfo.put("batting boundary points", gameRules.getBattingBoundaryPoints());
+		appInfo.put("bowling wicket points", gameRules.getBowlingPointsWicket());
+		appInfo.put("bowling boundary points", gameRules.getBowlingPointsBoundary());
+		appInfo.put("fielding boundary points", gameRules.getFieldingpointsBoundary());
+		appInfo.put("other points caption", gameRules.getOtherPointsCaption());
+		return ResponseEntity.ok(appInfo);
+	}
+
+
 }    
+

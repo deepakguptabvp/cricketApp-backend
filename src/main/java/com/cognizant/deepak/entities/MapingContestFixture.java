@@ -12,23 +12,42 @@ public class MapingContestFixture {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private int matchId;
+	private String matchName;
 	private String teamA;
 	private String teamB;   
-	private String contestId;
+	private int contestId;
 	private String contestName;
 
 	public MapingContestFixture() {
 		super();
 		// TODO Auto-generated constructor stub
+	}  
+  
+	public int getId() {
+		return id;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
 	public int getMatchId() {
 		return matchId;
 	}
 
 	public void setMatchId(int matchId) {
 		this.matchId = matchId;
+	}
+
+	public String getMatchName() {
+		return matchName;
+	}
+
+	public void setMatchName(String matchName) {
+		this.matchName = matchName;
 	}
 
 	public String getTeamA() {
@@ -47,11 +66,11 @@ public class MapingContestFixture {
 		this.teamB = teamB;
 	}
 
-	public String getContestId() {
+	public int getContestId() {
 		return contestId;
 	}
 
-	public void setContestId(String contestId) {
+	public void setContestId(int contestId) {
 		this.contestId = contestId;
 	}
 
@@ -65,8 +84,8 @@ public class MapingContestFixture {
 
 	@Override
 	public String toString() {
-		return "MapingContestFixture [matchId=" + matchId + ", teamA=" + teamA + ", teamB=" + teamB + ", contestId="
-				+ contestId + ", contestName=" + contestName + "]";
+		return "MapingContestFixture [matchId=" + matchId + ", matchName=" + matchName + ", teamA=" + teamA + ", teamB="
+				+ teamB + ", contestId=" + contestId + ", contestName=" + contestName + "]";
 	}
 
 	

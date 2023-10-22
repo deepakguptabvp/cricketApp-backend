@@ -1,6 +1,6 @@
 package com.cognizant.deepak.controller;
 
-import java.util.List; 
+import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class Controller {
 	}
 
 //-----------------------------------------------Team Api's-----------------------------------------------------------	
-
+   
 	@PostMapping("/cricket-app/team/addteam")
 	public ResponseEntity<Team> addTeam(@RequestBody @Validated Team team) {
 		return new ResponseEntity<>(teamService.setTeam(team), HttpStatus.CREATED);

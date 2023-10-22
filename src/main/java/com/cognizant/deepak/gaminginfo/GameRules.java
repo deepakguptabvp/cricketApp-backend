@@ -6,6 +6,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
+//enable config property 
+
 public class GameRules {
 
 	@Autowired

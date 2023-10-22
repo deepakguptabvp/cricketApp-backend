@@ -26,7 +26,7 @@ public class MapingContestFixtureService {
 //	public MapingContestFixture setMapingContestFixture(MapingContestFixture mapingContestFixture) {
 //		return mapingContestFixtureRepository.save(mapingContestFixture);
 //	}
-
+     
 //	set new mapping contest fixture
 	public Object create(MapingContestFixture mapingContestFixture) {
 		System.out.println("asdfasfd");
@@ -65,3 +65,4 @@ public class MapingContestFixtureService {
 	}
 
 }  
+     
